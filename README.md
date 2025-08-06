@@ -1,6 +1,6 @@
 # **⚡ SmartScan AI Backend: A Decoupled API Gateway**
 
-This repository contains the Node.js Express API that serves as the middleware for the **[SmartScan AI](https://www.google.com/search?q=https://github.com/your-repo/smartscan-ai-fullstack-repo)** project. It showcases expertise in designing and building a critical service that orchestrates communication between the frontend and a Python-based AI microservice, all within a scalable architecture.
+This repository contains the Node.js Express API that serves as the middleware for the **[SmartScan AI](https://smartscan-ai-frontend.vercel.app/onboarding)** project. It showcases expertise in designing and building a critical service that orchestrates communication between the frontend and a Python-based AI microservice, all within a scalable architecture.
 
 ## **🛠️ Tech Stack & Rationale**
 
@@ -61,27 +61,6 @@ This service acts as a crucial intermediary, demonstrating a clear understanding
 3.  **Handle Response:** Processes the AI's response, handling any potential errors.
 4.  **Return Result:** Sends the AI-generated caption back to the frontend.
 
-## **🔧 Development**
-
-To get the server up and running, follow these commands.
-
-```bash
-# Install dependencies
-npm install
-
-# Start server
-npm start              # Production
-npm run dev           # Development with nodemon
-```
-
-## **🌐 Environment Variables**
-
-This project uses environment variables to manage sensitive information and configuration, a best practice for production applications.
-
-```env
-PYTHON_SERVER_URL=https://your-python-server.onrender.com
-PORT=3001
-```
 
 ## **📊 Robust Error Handling**
 
