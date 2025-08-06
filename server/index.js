@@ -5,6 +5,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Add root route
+app.get("/", (req, res) => {
+  res.json({ message: "SmartScan AI Backend is running!" });
+});
+
 app.post("/api/classify", async (req, res) => {
   const { imageUrl } = req.body;
   if (!imageUrl) {
