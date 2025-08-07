@@ -1,13 +1,24 @@
 import cors from "cors";
 import express from "express";
 import fetch from "node-fetch";
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ✅ Use environment variable for Python backend URL
+const PYTHON_BACKEND_URL = process.env.PYTHON_BACKEND_URL || "https://python-backend-server-8nsy.onrender.com";
+
 // Add root route
 app.get("/", (req, res) => {
-  res.json({ message: "SmartScan AI Backend is running!" });
+  res.json({ 
+    message: "SmartScan AI Node.js Backend is running!",
+    python_backend: PYTHON_BACKEND_URL,
+    endpoints: {
+      "/": "Health check",
+      "/api/classify": "POST - Image classification proxy"
+    }
+  });
 });
 
 app.post("/api/classify", async (req, res) => {
@@ -15,8 +26,11 @@ app.post("/api/classify", async (req, res) => {
   if (!imageUrl) {
     return res.status(400).json({ output: "No imageUrl provided" });
   }
+  
   try {
-    const response = await fetch("http://localhost:5001/local-caption", {
+    console.log(`Forwarding request to: ${PYTHON_BACKEND_URL}/local-caption`);
+    
+    const response = await fetch(`${PYTHON_BACKEND_URL}/local-caption`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ imageUrl }),
@@ -35,9 +49,10 @@ app.post("/api/classify", async (req, res) => {
     }
     res.json({ output: data.output });
   } catch (err) {
-    console.error("Local server error:", err);
-    res.status(500).json({ output: "Server error" });
+    console.error("Proxy server error:", err);
+    res.status(500).json({ output: "Server error: " + err.message });
   }
 });
 
-app.listen(3001, () => console.log("Server running on port 3001"));
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Node.js server running on port ${PORT}`));
